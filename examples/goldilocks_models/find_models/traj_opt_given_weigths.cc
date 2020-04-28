@@ -239,7 +239,7 @@ void extractResult(VectorXd& w_sol,
   VectorXd is_success(1);
   if (result.is_success()) is_success << 1;
   else is_success << 0;
-  writeCSV(directory + prefix + string("is_success.csv"), is_success);
+//  writeCSV(directory + prefix + string("is_success.csv"), is_success);
 
   *(is_success_vec[sample_idx]) = result.is_success()? 1 : 0;
 
@@ -253,16 +253,16 @@ void extractResult(VectorXd& w_sol,
   gm_traj_opt.ConstructStateCubicSplineInfo(
       result, plant, num_time_samples, dataset_list, &t_cubic_spline,
       &x_cubic_spline, &xdot_cubic_spline);
-  writeCSV(directory + prefix + string("t_cubic_spline.csv"), t_cubic_spline);
-  writeCSV(directory + prefix + string("x_cubic_spline.csv"), x_cubic_spline);
-  writeCSV(directory + prefix + string("xdot_cubic_spline.csv"),
+//  writeCSV(directory + prefix + string("t_cubic_spline.csv"), t_cubic_spline);
+//  writeCSV(directory + prefix + string("x_cubic_spline.csv"), x_cubic_spline);
+//  writeCSV(directory + prefix + string("xdot_cubic_spline.csv"),
            xdot_cubic_spline);
 
   // Get the solution of all the decision variable
   w_sol = result.GetSolution(gm_traj_opt.dircon->decision_variables());
-  writeCSV(directory + prefix + string("w.csv"), w_sol);
+//  writeCSV(directory + prefix + string("w.csv"), w_sol);
   // if (result.is_success())
-  //   writeCSV(directory + prefix + string("w (success).csv"), w_sol);
+//  //   writeCSV(directory + prefix + string("w (success).csv"), w_sol);
   if (is_print_for_debugging) {
     for (int i = 0; i < w_sol.size(); i++) {
       cout << i << ": " << gm_traj_opt.dircon->decision_variables()[i] << ", "
@@ -278,9 +278,9 @@ void extractResult(VectorXd& w_sol,
             num_time_samples[num_time_samples.size() - 1] - 1);
 //  state_at_knots.col(N - 1) = result.GetSolution(xf);
   // cout << "you'll need to update state_at_knots if it's multiple modes\n";
-  writeCSV(directory + prefix + string("time_at_knots.csv"), time_at_knots);
-  writeCSV(directory + prefix + string("state_at_knots.csv"), state_at_knots);
-  writeCSV(directory + prefix + string("input_at_knots.csv"), input_at_knots);
+//  writeCSV(directory + prefix + string("time_at_knots.csv"), time_at_knots);
+//  writeCSV(directory + prefix + string("state_at_knots.csv"), state_at_knots);
+//  writeCSV(directory + prefix + string("input_at_knots.csv"), input_at_knots);
   if (is_print_for_debugging) {
     cout << "time_at_knots = \n" << time_at_knots << "\n";
     cout << "state_at_knots = \n" << state_at_knots << "\n";
@@ -309,8 +309,8 @@ void extractResult(VectorXd& w_sol,
   c << result.get_optimal_cost();
   VectorXd c_without_tau(1);
   c_without_tau << c(0) - tau_cost;
-  writeCSV(directory + prefix + string("c.csv"), c);
-  writeCSV(directory + prefix + string("c_without_tau.csv"), c_without_tau);
+//  writeCSV(directory + prefix + string("c.csv"), c);
+//  writeCSV(directory + prefix + string("c_without_tau.csv"), c_without_tau);
 
   c_vec[sample_idx]->resizeLike(c);
   *(c_vec[sample_idx]) = c;
@@ -455,8 +455,8 @@ void postProcessing(const VectorXd& w_sol,
     // store new w_sol
     VectorXd w_sol_new(w_sol.rows() + n_extend * N);
     w_sol_new << w_sol.head(w_sol.rows() - n_tau * N), tau_new;
-    writeCSV(directory + prefix + string("w (no extension).csv"), w_sol);
-    writeCSV(directory + prefix + string("w.csv"), w_sol_new);
+//    writeCSV(directory + prefix + string("w (no extension).csv"), w_sol);
+//    writeCSV(directory + prefix + string("w.csv"), w_sol_new);
 
     // Create a file that shows the new index of theta_sDDot
     // Assume that the new features include all the old features (in dynamics)
@@ -492,7 +492,7 @@ void postProcessing(const VectorXd& w_sol,
       DRAKE_DEMAND(idx > -1);
       new_idx(i) = idx;
     }
-    writeCSV(directory + string("theta_sDDot_new_index.csv"), new_idx);
+//    writeCSV(directory + string("theta_sDDot_new_index.csv"), new_idx);
 
   } else {
     if (n_rerun > N_rerun) {
@@ -572,13 +572,13 @@ void postProcessing(const VectorXd& w_sol,
 
     // Store the vectors and matrices
     // cout << "\nStoring vectors and matrices into csv.\n";
-    /*writeCSV(directory + prefix + string("H.csv"), H);
-    writeCSV(directory + prefix + string("b.csv"), b);
-    writeCSV(directory + prefix + string("A.csv"), A);
-    writeCSV(directory + prefix + string("lb.csv"), lb);
-    writeCSV(directory + prefix + string("ub.csv"), ub);
-    writeCSV(directory + prefix + string("y.csv"), y);
-    writeCSV(directory + prefix + string("B.csv"), B);*/
+//    /*writeCSV(directory + prefix + string("H.csv"), H);
+//    writeCSV(directory + prefix + string("b.csv"), b);
+//    writeCSV(directory + prefix + string("A.csv"), A);
+//    writeCSV(directory + prefix + string("lb.csv"), lb);
+//    writeCSV(directory + prefix + string("ub.csv"), ub);
+//    writeCSV(directory + prefix + string("y.csv"), y);
+//    writeCSV(directory + prefix + string("B.csv"), B);*/
 
     auto start = std::chrono::high_resolution_clock::now();
     w_sol_vec[sample_idx]->resizeLike(w_sol);
