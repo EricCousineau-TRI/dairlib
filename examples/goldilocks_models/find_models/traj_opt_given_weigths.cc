@@ -256,7 +256,7 @@ void extractResult(VectorXd& w_sol,
 //  writeCSV(directory + prefix + string("t_cubic_spline.csv"), t_cubic_spline);
 //  writeCSV(directory + prefix + string("x_cubic_spline.csv"), x_cubic_spline);
 //  writeCSV(directory + prefix + string("xdot_cubic_spline.csv"),
-           xdot_cubic_spline);
+//           xdot_cubic_spline);
 
   // Get the solution of all the decision variable
   w_sol = result.GetSolution(gm_traj_opt.dircon->decision_variables());
