@@ -110,7 +110,8 @@ string set_initial_guess(const string directory, int iter, int sample, int total
     VectorXd past_theta(past_theta_s.rows()+past_theta_sDDot.rows());
     past_theta << past_theta_s,past_theta_sDDot;
     double theta_diff = (past_theta - current_theta).norm() / current_theta.norm();
-    if ((theta_diff < theta_range) && (iter-past_iter<10)) {
+    //test if ((theta_diff < theta_range) && (iter-past_iter<10))
+    if ((theta_diff < theta_range)) {
       //take out corresponding w and calculate the weight for interpolation
       MatrixXd w_gamma;
       VectorXd weight_gamma;
