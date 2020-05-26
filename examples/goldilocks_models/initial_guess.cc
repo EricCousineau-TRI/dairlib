@@ -83,9 +83,8 @@ string set_initial_guess(const string directory, int iter, int sample, int total
         VectorXd past_gamma(gamma_dimension);
         past_gamma << past_ground_incline(0, 0), past_stride_length(0, 0), past_turning_rate(0,0);
         // use the third power of the norm of difference between past gamma and current gamma to judge distance
-        VectorXd dif_gamma = (past_gamma - current_gamma).array().abs()*gamma_scale.array();
-        VectorXd dif_gamma2 = dif_gamma.array().pow(2);
-        double distance_gamma =  (dif_gamma.transpose() * dif_gamma2)(0,0);
+        VectorXd dif_gamma = (past_gamma - current_gamma).array()*gamma_scale.array();
+        double distance_gamma =  pow((dif_gamma.transpose() * dif_gamma)(0,0), 3/2);
         if (distance_gamma < distance_gamma_min) {
             distance_gamma_min = distance_gamma;
             sample_near = sample_num;
@@ -131,9 +130,8 @@ string set_initial_guess(const string directory, int iter, int sample, int total
           VectorXd past_gamma(gamma_dimension);
           past_gamma << past_ground_incline(0, 0), past_stride_length(0, 0), past_turning_rate(0, 0);
           //calculate the weight for each sample using the third power of the difference between gamma
-          VectorXd dif_gamma = (past_gamma - current_gamma).array().abs()*gamma_scale.array();
-          VectorXd dif_gamma2 = dif_gamma.array().pow(2);
-          double distance_gamma =  (dif_gamma.transpose() * dif_gamma2)(0,0);
+          VectorXd dif_gamma = (past_gamma - current_gamma).array()*gamma_scale.array();
+          double distance_gamma =  pow((dif_gamma.transpose() * dif_gamma)(0,0), 3/2);
           //extract the solution of this sample
           VectorXd w_to_interpolate = readCSV(directory + to_string(past_iter) + string("_")
                                               + to_string(sample_num) + string("_w.csv"));
